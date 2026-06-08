@@ -21,14 +21,14 @@ app.use('/api/locations', AppRoutes)
 
 // connect to db
 mongoose.connect(process.env.MONG_URI)
-    .then(() => {})
-    // listen for request
-app.listen(PORT, () =>  {
-    console.log('listening on port', PORT)
-})
+    .then(() => {
+        const PORT = process.env.PORT || 5500
+        // listen for request 
+        app.listen(PORT, () => {
+            console.log('connected to db & listening on port', PORT)
+        })
+    })
     .catch((error) => {
         console.log(error)
     })
 
-
-const PORT = process.env.PORT || 5500;
