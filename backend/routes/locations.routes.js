@@ -1,4 +1,5 @@
 const express = require('express')
+const Location = require('../models/locationMode')
 
 const router = express.Router()
 
@@ -13,8 +14,15 @@ router.get('/:id', (req, res) => {
 })
 
 // POST a new location
-router.post('/', (req, res) => {
-    res.json({mssg: 'POST a new location'})
+router.post('/', async (req, res) => {
+    const {title, address, postcode, postarea} = req.body
+
+    try {
+        const location = await Location.create({title, address, postcode, postarea})
+        res.status(200).json(location)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 })
 
 // DELETE a location
